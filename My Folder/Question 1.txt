@@ -1,0 +1,97 @@
+/*
+Write a c# program to get the efficient 3 member team for a case.
+Array of a Numbers : 10, 15, 6, 20, 35, 45, 60, 9
+Case Requirement : 41
+Output -> 6, 15, 20
+*/
+
+//Program
+using System;
+
+namespace evaluationquestion1
+{
+    class Program
+    {
+        static int count_lesser = 0, l1, l2, l3, l4, count_greater = 0, g1, g2, g3, g4; //declaration of static variables
+        static(int, int, int, int, bool)Efficientof3(int[] input_1, int input_2)  //Method to check the efficient of 3 number of the given array
+        {
+            int size = input_1.Length;
+            for (int i = 0; i < size - 2; i++)
+            {
+                for (int j = i + 1; j < size - 1; j++)
+                {
+                    for (int k = j + 1; k < size; k++)
+                    {
+                        int y = input_1[i] + input_1[j] + input_1[k];
+                        if (y == input_2)
+                        {
+                            return (input_1[i], input_1[j], input_1[k], input_2, true);
+                        }
+                    }
+                }
+            }
+            return (0, 0, 0, input_2, false);
+        }
+        static void Main(string[] args)
+        {
+            Console.Write("Enter The Count of the Number in the Array : ");
+            int size = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\nEnter The Numbers : ");
+            int[] input_1 = new int[size];
+            for (int i = 0; i < size; i++)
+            {
+                input_1[i] = Convert.ToInt32(Console.ReadLine());
+            }
+            Array.Sort(input_1);
+            Console.Write("\nEnter Random Number : ");
+            int input_2 = Convert.ToInt32(Console.ReadLine());
+            int x1 = input_2;
+            int x2 = input_2;
+            int x3 = input_2;
+            var e = Efficientof3(input_1, x1);
+            bool z1 = e.Item5;
+            bool z2 = e.Item5;
+            bool z3 = e.Item5;
+            while (z2 == false && count_lesser < 1000)
+            {
+                x2 = x2 - 1;
+                var lesser = Efficientof3(input_1, x2);
+                l1 = lesser.Item1;
+                l2 = lesser.Item2;
+                l3 = lesser.Item3;
+                l4 = lesser.Item4;
+                count_lesser++;
+                z2 = lesser.Item5;
+            }
+            while (z3 == false && count_greater < 1000)
+            {
+                x3 = x3 + 1;
+                var greater = Efficientof3(input_1, x3);
+                g1 = greater.Item1;
+                g2 = greater.Item2;
+                g3 = greater.Item3;
+                g4 = greater.Item4;
+                count_greater++;
+                z3 = greater.Item5;
+            }
+            if (z1 == true)
+            {
+                Console.WriteLine("\n{0}, {1}, {2} found for {3}", e.Item1, e.Item2, e.Item3, e.Item4);
+            }
+            if (count_lesser < count_greater)
+            {
+                Console.WriteLine("\n{0}, {1}, {2} found for {3}", l1, l2, l3, l4);
+            }
+            if (count_greater < count_lesser)
+            {
+                Console.WriteLine("\n{0}, {1}, {2} found for {3}", g1, g2, g3, g4);
+            }
+            if (count_lesser != 0 && count_lesser == count_greater)
+            {
+                Console.Write("\n{0}, {1}, {2} found for {3}", l1, l2, l3, l4);
+                Console.Write("\n{0}, {1}, {2} found for {3}", g1, g2, g3, g4);
+            }
+            Console.Read();
+        }
+    }
+}

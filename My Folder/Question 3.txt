@@ -1,0 +1,227 @@
+/*
+Write a program to store the Account Details in a List.
+Give option to Add, Modify and Remove the Account.
+The Account types would have the following information.
+Name.
+Account No.
+Account Type -> Savings/Current.
+Bank Balance.
+Add two methods to perform Debit and Credit.
+Add a method to compute the Interest of all the accounts  (Use Dynamic Polymorphism).
+For Saving Interest Rate – 5%.
+For Current Interest Rate – 10%.
+*/
+//Program
+
+//Main Class
+
+using System;
+
+namespace evaluationquestion3
+{
+    class Program
+    {
+        static int index = 0;
+        static Account[] AccountList = new Account[100];
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Welcome To A NAVEEN KUMAR's Bank");
+            int i = 0;
+            while (i < 5)
+            {
+                Console.WriteLine("\nPlease Select The Operations : ");
+                Console.WriteLine("Press 1 to Create an New Account");
+                Console.WriteLine("Press 2 to View All Account Details");
+                Console.WriteLine("Press 3 to Deposit Money in Your Account");
+                Console.WriteLine("Press 4 to Withdraw Money in Your Account");
+                Console.WriteLine("Press 5 to Exit\n");
+                Console.Write("Your Choice : ");
+                i = Convert.ToInt32(Console.ReadLine());
+                switch (i)  //using switch case for selecting the bank operation processes
+                {
+                    case 1:
+                        CreateAccount();
+                        break;
+                    case 2:
+                        Console.WriteLine();
+                        ViewAllAccount();
+                        break;
+                    case 3:
+                        Console.WriteLine();
+                        Deposit();
+                        break;
+                    case 4:
+                        Console.WriteLine();
+                        Withdraw();
+                        break;
+                    default:
+                        Console.WriteLine("\nTHANK YOU FOR VISITING OUR BANK\n");
+                        Console.Read();
+                        break;
+                }
+            }
+
+            void CreateAccount()    //creating the accounts
+            {
+                Account a = new Account();
+                Console.Write("\nEnter The Account Holder Name : ");
+                a.AccountHoldername = Console.ReadLine();
+                Console.Write("Enter The Account Number : ");
+                a.AccountNumber = Console.ReadLine();
+                Console.Write("Enter The Account Type ( S / C ) : ");
+                a.AccountType = Console.ReadLine();
+                Console.Write("Enter The Intial balance : ");
+                int balance = Convert.ToInt32(Console.ReadLine());
+                a.SetBalance(balance);
+                AccountList[index++] = a;
+            }
+
+            void ViewAllAccount()   //viewing all the accounts
+            {
+                Console.WriteLine("All The Accounts and Its Details\n");
+                for (int i = 0; i < index; i++)
+                {
+                    Console.WriteLine("Account Holder Name : "+ AccountList[i].AccountHoldername);
+                    Console.WriteLine("Account Number : "+ AccountList[i].AccountNumber);
+                    Console.WriteLine("Account Type : "+ AccountList[i].AccountType);
+                    Console.WriteLine("Account Balance : "+ AccountList[i].AvailableBalance());
+                    int duplicateBal = AccountList[i].AvailableBalance();
+                    int interests;
+                    if (AccountList[i].AccountType == "S")
+                    {
+                        Account s = new Savings();  //Object for Savings Class using Polymorphism
+                        interests = s.interest(duplicateBal);   //calling savings account interest
+                    }
+                    else
+                    {
+                        Account c = new Current();  //Object for Current Class using Polymorphism
+                        interests = c.interest(duplicateBal);   //calling current account interest
+                    }
+                    Console.WriteLine("Interest : " + interests + "\n");
+                }
+            }
+
+            void Deposit()  //performing the deposit operation
+            {
+                Console.WriteLine("Enter the Account Number : ");
+                string accnum = Console.ReadLine();
+                bool isFound = false;
+                for (int i = 0; i < index; i++)
+                {
+                    if (accnum == AccountList[i].AccountNumber) //checking the account number to deposit
+                    {
+                        Console.WriteLine("Enter The Amount : ");
+                        int balance = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Your Current Balance : " + AccountList[i].Deposit(balance));
+                        isFound = true;
+                    }
+                }
+                if (isFound == false)
+                {
+                    Console.WriteLine("Invalid Account Number");
+                }
+            }
+
+            void Withdraw()  //performing the withdraw operation
+            {
+                Console.WriteLine("Enter the Account Number : ");
+                string accnum = Console.ReadLine();
+                bool isFound = false;
+                for (int i = 0; i < index; i++)
+                {
+                    Account a = new Account();
+                    if (accnum == AccountList[i].AccountNumber) //checking the account number to withdraw
+                    {
+                        Console.WriteLine("Enter The Amount : ");
+                        int balance = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Your Current Balance : " + AccountList[i].Withdraw(balance));
+                        isFound = true;
+                    }
+                }
+                if (isFound == false)
+                {
+                    Console.WriteLine("Invalid Account Number");
+                }
+            }
+        }
+    }
+}
+
+
+//Account Class
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace evaluationquestion3
+{
+    class Account
+    {
+        public string AccountHoldername { get; set; }   //declaring all the properties in Account class
+        public string AccountNumber { get; set; }
+        public string AccountType { get; set; }
+        private int CurrentBalance { get; set; }
+
+        public void SetBalance(int Balance)
+        {
+            CurrentBalance = Balance;
+        }
+        public int AvailableBalance()
+        {
+            return CurrentBalance;
+        }
+        public int Deposit(int Balance)
+        {
+            CurrentBalance = CurrentBalance + Balance;
+            return CurrentBalance;
+
+        }
+        public int Withdraw(int Balance)
+        {
+            CurrentBalance = CurrentBalance - Balance;
+            return CurrentBalance;
+        }
+
+        public virtual int interest(int duplicateBal)   //creating virtual account for polymorphism concept
+        {
+            //simply;
+            return 0;
+        }
+    }
+}
+
+//Savings Class
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace evaluationquestion3
+{
+    class Savings : Account //creating override for polymorphism concept
+    {
+        public override int interest(int duplicateBal)
+        {
+            int interest = (duplicateBal * 5 / 100);
+            return interest;
+        }
+    }
+}
+
+//Current Class
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace evaluationquestion3
+{
+    class Current : Account //creating override for polymorphism concept
+    {
+        public override int interest(int duplicateBal)
+        {
+            int interest = (duplicateBal * 10 / 100);
+            return interest;
+        }
+    }
+}
