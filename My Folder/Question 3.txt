@@ -1,3 +1,5 @@
+//Question 3:
+
 /*
 Write a program to store the Account Details in a List.
 Give option to Add, Modify and Remove the Account.
@@ -8,12 +10,13 @@ Account Type -> Savings/Current.
 Bank Balance.
 Add two methods to perform Debit and Credit.
 Add a method to compute the Interest of all the accounts  (Use Dynamic Polymorphism).
-For Saving Interest Rate – 5%.
-For Current Interest Rate – 10%.
+For Savings Account Interest Rate = 05%.
+For Current Account Interest Rate = 10%.
 */
-//Program
 
-//Main Class
+//Answer
+
+//1. Main Class
 
 using System;
 
@@ -147,8 +150,7 @@ namespace evaluationquestion3
     }
 }
 
-
-//Account Class
+//2. Account Class
 
 using System;
 using System.Collections.Generic;
@@ -191,7 +193,7 @@ namespace evaluationquestion3
     }
 }
 
-//Savings Class
+//3. Savings Class
 
 using System;
 using System.Collections.Generic;
@@ -209,7 +211,7 @@ namespace evaluationquestion3
     }
 }
 
-//Current Class
+//4. Current Class
 using System;
 using System.Collections.Generic;
 using System.Text;
