@@ -1,11 +1,14 @@
+//Question 1:
+
 /*
 Write a c# program to get the efficient 3 member team for a case.
-Array of a Numbers : 10, 15, 6, 20, 35, 45, 60, 9
-Case Requirement : 41
-Output -> 6, 15, 20
+[Input 1] Array of a Numbers : 10, 15, 6, 20, 35, 45, 60, 9.
+[Input 2] Case Requirement : 41.
+[Output ] -> 6, 15, 20.
 */
 
-//Program
+//Answer
+
 using System;
 
 namespace evaluationquestion1
