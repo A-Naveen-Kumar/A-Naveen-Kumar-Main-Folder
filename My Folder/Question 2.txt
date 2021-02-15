@@ -10,30 +10,19 @@ Throw error if the string is not in camel case format.
 //Answer
 
 using System;
+using System.Text.RegularExpressions;
+
 namespace evaluationquestion2
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("CAMEL Case to SNAKE case");
-            Console.Write("Enter Any Sentence : ");
-            string sentence1 = Console.ReadLine();
-            int len = sentence1.Length;
-            string sentence2 = "";
-            for (int i = 0; i < len; i++)
-            {
-                if(sentence1[i] == ' ')
-                {
-                    sentence2 = sentence2 + '_';
-                }
-                else
-                {
-                    sentence2 = sentence2 + char.ToLower(sentence1[i]);
-                }
-            }
-            Console.WriteLine(sentence2);
-            Console.ReadLine();
+            Console.Write("CAMEL CASE to SNAKE CASE\nEnter Any Sentence in CAMEL Case : ");
+            string sentence_1 = Console.ReadLine();   //getting input as CAMEL case
+            string sentence_2 = Regex.Replace(sentence_1, "[A-Z]", "_$0").ToLower();    //using regex to convert from camel to snake
+            Console.Write(sentence_2);  //printing ouput as SNAKE case
+            Console.Read();
         }
     }
 }
