@@ -4,11 +4,8 @@ You wil come to know something new.
 
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ebmsFramework;
-using Syncfusion.Pdf.Graphics;
 
 namespace FRTestApp
 {
